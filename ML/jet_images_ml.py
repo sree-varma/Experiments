@@ -76,14 +76,12 @@ early_stopping = None # use None if you don't want to implement early stopping
 """
 Data set Configuration
 """
-train_path ='/usr/Pythia/colour/images_200-220GeV/train/'
+train_path ='/Data/Pythia/colour/train/'
 print train_path
 data = dataset.read_train_sets(train_path, img_size, num_channels, classes, validation_size=validation_size)
-#test_images, test_ids,test_labels = dataset.read_test_set(test_path, img_size,classes)
-#test_pythia_images,test_pythia_ids,test_pythia_labels=dataset.read_test_set(test_path1,img_size,classes)
+
 print("Size of:")
 print("- Training-set:\t\t{}".format(len(data.train.labels)))
-#print("- Test-set:\t\t{}".format(len(test_images)))
 print("- Validation-set:\t{}".format(len(data.valid.labels)))
 
 num_batches = int(data.train.num_examples/batch_size)
@@ -115,7 +113,7 @@ with tf.name_scope("accuracy"):
 
 session.run(tf.global_variables_initializer())
 
-logdir = '/data/ML/jet_images/logs/Pythia/200-220/colour/'
+logdir = '/Data/ML/logs/Pythia/200-220/colour/'
 writer = tf.summary.FileWriter(logdir)
 writer.add_graph(session.graph)
 
@@ -182,9 +180,9 @@ def optimize(num_iterations, starting_iteration=0):
             eval_writer.add_summary(summary_value_val, i)
 
         if i % saving_freq==0:
-            if not os.path.exists('/data/ML/jet_images/Pythia/200-220/colour/saved_models'):
-            	os.makedirs('/data/ML/jet_images/Pythia/200-220/colour/saved_models')
-            saver.save(session, '/data/ML/jet_images/Pythia/200-220/colour/saved_models/saved_model_{}.ckpt'.format(i))
+            if not os.path.exists('/Data/ML/Pythia/200-220/colour/saved_models'):
+            	os.makedirs('/Data/ML/Pythia/200-220/colour/saved_models')
+            saver.save(session, '/Data/ML/Pythia/200-220/colour/saved_models/saved_model_{}.ckpt'.format(i))
 
         if i % num_batches == 0:
             epoch = int(i / num_batches)
