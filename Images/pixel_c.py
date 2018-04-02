@@ -106,11 +106,9 @@ def image_array(index_array,channel_1,channel_2,channel_3,df_image,q):
                 	channel_2[:,:,index]=channel_2[:,:,index]/total_pT #Normalisation
 
 		total_multiplicity=np.sum(channel_1[:,:,index])
-		if total_multiplicity==0 or total_multiplicity=='nan':
-			channel_1[:,:,index]=channel_1[:,:,index]/(total_multiplicity+0.00001)
-                #print total_pT
-		else:
-                	channel_1[:,:,index]=channel_1[:,:,index]/total_multiplicity #Normalisation
+		
+		channel_1[:,:,index]=channel_1[:,:,index]/(total_multiplicity+0.00001)
+                
     l=[channel_1,channel_2,channel_3] 
     q.put(l)#channel_1,channel_2,channel_3)
     return l#channel_1,channel_2,channel_3 #image_array
