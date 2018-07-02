@@ -118,6 +118,7 @@ writer = tf.summary.FileWriter(logdir)
 writer.add_graph(session.graph)
 
 eval_writer = tf.summary.FileWriter(logdir + '_eval')  
+auc_writer = tf.summary.FileWriter(logdir + '_auc') 
 x_batch, _, _, _ = data.train.next_batch(batch_size)
 
 # Add image summary to inspect network input
@@ -163,6 +164,8 @@ def optimize(num_iterations, starting_iteration=0):
 
         if i % validation_freq == 0:
             # validation step
+	    predictions = []
+	    true_labels = []
             av_validate_acc = 0.0
             av_val_loss = 0.0
             for j in range(valdiation_batches):
@@ -171,13 +174,25 @@ def optimize(num_iterations, starting_iteration=0):
                     x_valid_batch = x_valid_batch.reshape(batch_size, img_size_flat)
 
                 feed_dict_validate = {x: x_valid_batch, y_true: y_valid_batch}
-                validate_acc, val_loss = session.run([accuracy, cost], feed_dict=feed_dict_validate)
+                validate_acc, val_loss,y_pred_value = session.run([accuracy, cost,y_probs], feed_dict=feed_dict_validate)
                 av_validate_acc = av_validate_acc + validate_acc
                 av_val_loss = av_val_loss + val_loss
-            av_val_loss /= valdiation_batches
+	        predictions.extend(y_pred_value)
+ 		true_labels.extend(y_valid_batch)
+		
+            predictions=np.asarray(predictions)
+	    true_labels=np.asarray(true_labels)
+	    fprs, tprs, thresholds = roc_curve(true_labels[:,0], predictions[:,0])
+	    aucs = auc(fprs,tprs)
+	    
+	    av_val_loss /= valdiation_batches
             av_validate_acc /= valdiation_batches
             summary_value_val = session.run(merged_summary, feed_dict_validate)
+	    summary= tf.Summary()	
+	    summary.value.add(tag='AUC',simple_value=aucs) 
+	    
             eval_writer.add_summary(summary_value_val, i)
+	    auc_writer.add_summary(summary,i)
 
         if i % saving_freq==0:
             if not os.path.exists('/Data/ML/Pythia/200-220/colour/saved_models'):
