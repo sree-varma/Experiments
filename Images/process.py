@@ -70,8 +70,10 @@ for i in range(1,folders+1):
 
 	imFile1='run_%002d/jet_image_R_%s.dat'%(i,R)
 	immass1='run_%002d/jet_mass_R_%s.dat'%(i,R)
-	if os.path.exists(imFile1) and os.path.exists(immass1) :
-		continue
+	if os.path.exists(pathim+imFile1) and os.path.exists(pathim+immass1) :
+		imFile1='run_%002d/jet_image_R_%s.dat'%(i,R)
+		immass1='run_%002d/jet_mass_R_%s.dat'%(i,R)
+		
 	else:
 		imFile1='run_%002d/jet_image.dat'%i
 		immass1='run_%002d/jet_mass.dat'%i
