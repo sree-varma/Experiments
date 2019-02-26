@@ -1,1 +1,3 @@
-hfksdbvfjsdbvlsd
+Usage 
+python process.py -method mit -dataname Zj  -pt 500 -R 0.8 -channels 1
+python plot.py -method mit -signame tW -bgname jW -pt 1300-1400 -R 0.8 -channels 1
