@@ -107,11 +107,11 @@ if massfiles==1:
 	test_mass_bg =bg_mass[int(0.8*bg_mass.shape[0]):]
 	train_mass_sig=sig_mass[:int(0.8*sig_mass.shape[0])]
 	test_mass_sig = sig_mass[int(0.8*sig_mass.shape[0]):]
-	np.savez(path+"train_massjW_"+ptrange+"_0.8_"+method+"_sample.npz",train_mass_bg)
-	np.savez(path+"test_massjW_"+ptrange+"_0.8_"+method+"_sample.npz",test_mass_bg)
+	np.savez_compressed(path+"train_massjW_"+ptrange+"_0.8_"+method+"_sample.npz",train_mass_bg)
+	np.savez_compressed(path+"test_massjW_"+ptrange+"_0.8_"+method+"_sample.npz",test_mass_bg)
 
-	np.savez(path+"train_masstW_"+ptrange+"_0.8_"+method+"_sample.npz",train_mass_sig)
-	np.savez(path+"test_masstW_"+ptrange+"_0.8_"+method+"_sample.npz",test_mass_sig)
+	np.savez_compressed(path+"train_masstW_"+ptrange+"_0.8_"+method+"_sample.npz",train_mass_sig)
+	np.savez_compressed(path+"test_masstW_"+ptrange+"_0.8_"+method+"_sample.npz",test_mass_sig)
 
 
 if testfiles==0:
