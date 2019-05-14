@@ -107,8 +107,8 @@ for i in range(1,folders+1):
 
 image = np.concatenate([image[i] for i in range(len(image))],axis=2)
 mass=np.concatenate([mass[i] for i in range(len(mass))])
-np.savez(path+"train_image_"+dataname+"_"+ptrange+"_"+method+".npz",image) 
-np.savez(path+"train_mass_"+dataname+"_"+ptrange+"_"+method+".npz",mass)
+np.savez_compressed(path+"train_image_"+dataname+"_"+ptrange+"_"+method+".npz",image) 
+np.savez_compressed(path+"train_mass_"+dataname+"_"+ptrange+"_"+method+".npz",mass)
 
 
 
