@@ -9,8 +9,7 @@ import numpy as np
 import argparse
 import data
 
-from network import inference
-from network_1 import inference_1
+from network import inference,inference_1
 import dataset
 
 parser = argparse.ArgumentParser(description=__doc__)
